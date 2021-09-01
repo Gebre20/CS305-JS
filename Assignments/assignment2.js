@@ -26,12 +26,12 @@ console.log("expect 65: ", computeSalesCommission(true, 3500));
 console.log("expect 100: ", computeSalesCommission(false, 3500));
 
 //2.
-function computeBalance(amount, year, interestRate) {
+function compoundInterest(amount, interestRate, year) {
   let balance = amount * (1 + interestRate / (100 * 12)) ** (year * 12);
   return balance;
 }
-let result = computeBalance(10000, 5, 10);
-console.log(result);
+console.log("expect 110.47", compoundInterest(100, 10, 1));
+console.log("expect 16470.09", compoundInterest(10000, 5, 10));
 
 //3. Downpayment
 function calcDownpayment(cost) {
