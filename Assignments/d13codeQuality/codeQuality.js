@@ -3,7 +3,6 @@ module.exports = {
   computeSalesCommission,
   compoundInterest,
   calcDownpayment,
-  calcDownpayment,
   convertFahrenheit,
   calcDistance,
 };
@@ -28,21 +27,28 @@ function isVowel(char) {
 }
 
 function computeSalesCommission(salaried, salesAmount) {
+  let commission;
   if (salaried === true) {
     if (salesAmount < 300) {
-      return 0;
+      commission = 0;
+      return Number(Math.round(commission + "e2") + "e-2") || commission;
     } else if (salesAmount <= 500) {
-      return 0.01 * salesAmount;
+      commission = 0.01 * salesAmount;
+      return Number(Math.round(commission + "e2") + "e-2") || commission;
     } else {
-      return 0.01 * 500 + 0.02 * (salesAmount - 500);
+      commission = 0.01 * 500 + 0.02 * (salesAmount - 500);
+      return Number(Math.round(commission + "e2") + "e-2") || commission;
     }
   } else {
     if (salesAmount < 300) {
-      return 0;
+      commission = 0;
+      return Number(Math.round(commission + "e2") + "e-2") || commission;
     } else if (salesAmount <= 500) {
-      return 0.02 * salesAmount;
+      commission = 0.02 * salesAmount;
+      return Number(Math.round(commission + "e2") + "e-2") || commission;
     } else {
-      return 0.02 * 500 + 0.03 * (salesAmount - 500);
+      commission = 0.02 * 500 + 0.03 * (salesAmount - 500);
+      return Number(Math.round(commission + "e2") + "e-2") || commission;
     }
   }
 }
@@ -53,15 +59,19 @@ function compoundInterest(amount, interestRate, year) {
 }
 
 function calcDownpayment(cost) {
+  let downpayment;
   if (cost >= 200000) {
-    return 5000 + 0.1 * (cost - 200000);
-    return downpayment;
+    downpayment = 5000 + 0.1 * (cost - 200000);
+    return Number(Math.round(downpayment + "e2") + "e-2") || downpayment;
   } else if (cost >= 100000) {
-    return 7500 + 0.15 * (cost - 100000);
+    downpayment = 7500 + 0.15 * (cost - 100000);
+    return Number(Math.round(downpayment + "e2") + "e-2") || downpayment;
   } else if (cost >= 50000) {
-    return 2500 + 0.1 * (cost - 50000);
+    downpayment = 2500 + 0.1 * (cost - 50000);
+    return Number(Math.round(downpayment + "e2") + "e-2") || downpayment;
   } else if (cost >= 0) {
-    return 0.05 * cost;
+    downpayment = 0.05 * cost;
+    return Number(Math.round(downpayment + "e2") + "e-2") || downpayment;
   } else {
     console.log("Please enter a postive number and try again.");
   }
