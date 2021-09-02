@@ -70,7 +70,7 @@ describe("compoundInterest", function () {
 
 //4.a. Downpayment
 describe("Calculate downpayment", function () {
-  it("cost of 40000 at 1% plus 7500", function () {
+  it("cost of 40000 at 1%", function () {
     assert.equal(calcDownpayment(40000), 2000);
   });
 });
@@ -85,7 +85,7 @@ describe("Calculate downpayment", function () {
   });
 });
 describe("Calculate downpayment", function () {
-  it("cost of 200000 at 1% plus 5000", function () {
+  it("cost of 200000 at 5% plus 5000", function () {
     assert.equal(calcDownpayment(200000), 5000);
   });
 });
