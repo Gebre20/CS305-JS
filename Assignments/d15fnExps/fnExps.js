@@ -2,7 +2,7 @@
 
 /* You need the module.exports when testing in node.  Comment it out when you send your file to the browser
  */
-module.exports = { double, times100, myMap, triple1, triple2 };
+//module.exports = { double, times100, myMap, triple1, triple2() }; //, triple1, triple2
 
 //1. double
 function double(number) {
@@ -39,3 +39,4 @@ let triple1 = function (arg) {
 let triple2 = (arg) => {
   return 3 * arg;
 };
+module.exports = { double, times100, myMap, triple1, triple2 };
