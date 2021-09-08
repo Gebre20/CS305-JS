@@ -45,9 +45,9 @@ describe("library", function () {
   });
 
   it("add book", function () {
-    const newBook = { title: "My New Book", author: "Me Too", libraryID: 4144 };
-    ids.push(4144);
-    assert.deepEqual(addBook("My New Book", "Me Too", 4144), newBook);
+    const newBook = { title: "My New Book", author: "Me Too", libraryID: 5144 };
+    ids.push(5144);
+    assert.deepEqual(addBook("My New Book", "Me Too", 5144), newBook);
     assert.deepEqual(findIDs(), ids);
   });
 });
