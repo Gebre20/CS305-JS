@@ -1,74 +1,121 @@
 "use strict";
+/* global assert    */
+/* comment out the node specific code when going to the browser*/
+const assert = require("assert"); //always need this with node
+const myExports = require("./methods.js"); //with node need the name of your file with your functions here
+const groupById = myExports.groupById; //do this for all of the functions used in the Mocha tests
+const unique = myExports.unique;
+const filterRangeInPlace = myExports.filterRangeInPlace;
+const filterRange = myExports.filterRange;
+const Calculator = myExports.Calculator;
 
-/* You need the module.exports when testing in node.  Comment it out when you send your file to the browser */
-module.exports = {
-  groupById,
-  unique,
-  filterRangeInPlace,
-  filterRange,
-  Calculator,
-}; //add all of your function names here that you need for the node mocha tests
+/*
+Write a function filterRange(arr, a, b) that gets an array arr, looks for elements with values higher or equal to a and lower or equal to b and return a result as an array.
+The function should not modify the array. It should return the new array.
+*/
+describe("filterRange", function () {
+  it("returns the filtered values", function () {
+    let arr = [5, 3, 8, 1];
+    let filtered = filterRange(arr, 1, 4);
+    assert.deepEqual(filtered, [3, 1]);
+  });
 
-// function filterRange(arr, a, b) {
-//   let filteredArray = arr.filter(function (n, a, b) {
-//     if (n >= a && n <= b) return item;
-//   });
-//   return filteredArray || arr;
-// }
-function filterRange(arr, min, max) {
-  let newArr = arr.filter((num, min, max) =>
-    num >= min && num < max ? num : arr
-  );
-}
+  it("doesn't change the array", function () {
+    let arr = [5, 3, 8, 1];
+    let filtered = filterRange(arr, 1, 4);
+    assert.deepEqual(arr, [5, 3, 8, 1]);
+  });
+});
 
-function filterRangeInPlace(arr, num1, num2) {
-  for (let i = 0; i < arr.length; i++) {
-    let target = arr[i];
-    if (target < num1 || target > num2) {
-      arr.splice(i, 1);
-      i--;
-    }
-  }
-}
+/*
+Write a function filterRangeInPlace(arr, a, b) that gets an array arr and removes from it all values except those that are between a and b. The test is: a ≤ arr[i] ≤ b.
+The function should only modify the array. It should not return anything.
+*/
+describe("filterRangeInPlace", function () {
+  it("returns the filtered values", function () {
+    let arr = [5, 3, 8, 1];
+    filterRangeInPlace(arr, 1, 4);
+    assert.deepEqual(arr, [3, 1]);
+  });
 
-function Calculator() {
-  this.methods = {
-    "-": (a, b) => a - b,
-    "+": (a, b) => a + b,
+  it("doesn't return anything", function () {
+    assert.equal(filterRangeInPlace([1, 2, 3], 1, 4), undefined);
+  });
+});
 
-    "/": (a, b) => a / b,
-  };
+/* 
+Create a constructor function Calculator that creates “extendable” calculator objects.
+The task consists of two parts.  (see https://javascript.info/array-methods)
+*/
+describe("Calculator", function () {
+  let calculator;
 
-  this.calculate = function (str) {
-    let split = str.split(" "),
-      a = +split[0],
-      op = split[1],
-      b = +split[2];
+  before(function () {
+    calculator = new Calculator();
+  });
 
-    if (!this.methods[op] || isNaN(a) || isNaN(b)) {
-      return NaN;
-    }
+  it("calculate(12 + 34) = 46", function () {
+    assert.equal(calculator.calculate("12 + 34"), 46);
+  });
 
-    return this.methods[op](a, b);
-  };
+  it("calculate(34 - 12) = 22", function () {
+    assert.equal(calculator.calculate("34 - 12"), 22);
+  });
 
-  this.addMethod = function (name, func) {
-    this.methods[name] = func;
-  };
-}
+  it("add multiplication: calculate(2 * 3) = 6", function () {
+    calculator.addMethod("*", (a, b) => a * b);
+    assert.equal(calculator.calculate("2 * 3"), 6);
+  });
 
-function unique(arr) {
-  if (arr.length === 0) return "";
-  let result = [arr[0]];
-  for (let each of arr) {
-    if (result.indexOf(each) === -1) result.push(each);
-  }
-  return result;
-}
+  it("add power: calculate(2 ** 3) = 8", function () {
+    calculator.addMethod("**", (a, b) => a ** b);
+    assert.equal(calculator.calculate("2 ** 3"), 8);
+  });
+});
 
-function groupById(arr) {
-  return arr.reduce((item, value) => {
-    item[value.id] = value;
-    return item;
-  }, {});
-}
+/* Create a function unique(arr) that should return an array with unique items of arr. */
+describe("unique", function () {
+  let strings = [
+    "Hare",
+    "Krishna",
+    "Hare",
+    "Krishna",
+    "Krishna",
+    "Krishna",
+    "Hare",
+    "Hare",
+    ":-O",
+  ];
+  it("tests unique hare krishnas", function () {
+    assert.deepEqual(unique(strings), ["Hare", "Krishna", ":-O"]);
+  });
+});
+
+/*
+Let’s say we received an array of users in the form {id:..., name:..., age... }.
+Create a function groupById(arr) that creates an object from it, with id as the key, and array items as values.
+see example:  https://javascript.info/array-methods
+Such function is really handy when working with server data.
+In this task we assume that id is unique. There may be no two array items with the same id.
+Please use array .reduce method in the solution.
+*/
+describe("groupById", function () {
+  it("creates an object grouped by id", function () {
+    let users = [
+      { id: "john", name: "John Smith", age: 20 },
+      { id: "ann", name: "Ann Smith", age: 24 },
+      { id: "pete", name: "Pete Peterson", age: 31 },
+    ];
+
+    assert.deepEqual(groupById(users), {
+      john: { id: "john", name: "John Smith", age: 20 },
+      ann: { id: "ann", name: "Ann Smith", age: 24 },
+      pete: { id: "pete", name: "Pete Peterson", age: 31 },
+    });
+  });
+
+  it("works with an empty array", function () {
+    const users = [];
+    assert.deepEqual(groupById(users), {});
+  });
+});
